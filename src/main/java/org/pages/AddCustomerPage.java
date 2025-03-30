@@ -2,6 +2,7 @@ package org.pages;
 
 import io.qameta.allure.Step;
 import org.helpers.Wait;
+import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
@@ -30,7 +31,7 @@ public class AddCustomerPage extends BankManagerPage {
     /**
      * Кнопка перехода на страницу добавления пользователя.
      */
-    @FindBy(xpath = "//*[contains(text(),'Add Customer')]")
+    @FindBy(xpath = "//*[contains(text(),'Add Customer') and contains(@class, 'btn btn-default')]")
     WebElement addCustomerButton;
 
     public AddCustomerPage(final WebDriver webDriver) { super(webDriver); }
@@ -46,6 +47,8 @@ public class AddCustomerPage extends BankManagerPage {
         lastNameInput.sendKeys(lastName);
         postCodeInput.sendKeys(postCode);
         addCustomerButton.click();
+        Alert alert = driver.switchTo().alert();
+        alert.accept();
         return new AddCustomerPage(driver);
     }
 }

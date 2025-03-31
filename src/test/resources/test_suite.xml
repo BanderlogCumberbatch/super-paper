@@ -1,23 +1,9 @@
 <!DOCTYPE suite SYSTEM "http://testng.org/testng-1.1.dtd">
-<suite name="suite" parallel="none">
+<suite name="suite">
    <test name="test suite">
        <classes>
            <class name="XYZBankTests"/>
       </classes>
     </test>
-
-    <!-- <test name="param test 1">
-        <parameter name="name" value="Калугин П.И."/>
-        <parameter name="password" value="1243"/>
-        <classes>
-            <class name="TestNGExample"/>
-        </classes>
-    </test>
-    <test name="param test 2">
-        <parameter name="name" value="Коллега"/>
-        <parameter name="password" value="9524"/>
-        <classes>
-            <class name="TestNGExample"/>
-        </classes>
-    </test> -->
 </suite>
+

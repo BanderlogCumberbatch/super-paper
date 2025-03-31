@@ -6,6 +6,8 @@ import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
+import org.utils.SortChecker;
+
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -15,8 +17,6 @@ import java.util.stream.Collectors;
 public class CustomersPage extends BankManagerPage {
 
     public CustomersPage(final WebDriver webDriver) { super(webDriver); }
-
-    String productNameSelector = "//table[contains(@class, 'table-bordered')]/tbody/tr/td[1]";
 
     /**
      * Столбец таблицы с именами.
@@ -31,11 +31,15 @@ public class CustomersPage extends BankManagerPage {
     private WebElement sortByFirstNameButton;
 
     /**
-     * Возвращает список имён пользователей.
+     * Возвращает список со строкой со всеми данными выбранного пользователя.
      * @return List<String>
      */
-    @Step("Get customers names list")
-    public final List <String> getCustomers() {
+    @Step("Get selected customers data string")
+    public final List<String> getSelectedCustomers(String firstName, String lastName, String postCode) {
+        String productNameSelector = String.format("//table[contains(@class, 'table-bordered')]/tbody/tr[" +
+                "td[1][text()='%s'] and " +
+                "td[2][text()='%s'] and " +
+                "td[3][text()='%s']]", firstName, lastName, postCode);
         Wait.waitUntilVisible(driver, productsName);
         return driver
                 .findElements(By.xpath(productNameSelector))
@@ -48,8 +52,24 @@ public class CustomersPage extends BankManagerPage {
      * Возвращает список имён пользователей.
      * @return List<String>
      */
-    @Step("Get customers names list")
-    public final List<String> getCustomers(String firstName) {
+    @Step("Get customers first names list")
+    public final List<String> getCustomersFirstNames() {
+        String productNameSelector = "//table[contains(@class, 'table-bordered')]/tbody/tr/td[1]";
+        Wait.waitUntilVisible(driver, productsName);
+        return driver
+                .findElements(By.xpath(productNameSelector))
+                .stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Возвращает список имён пользователей с определённым именем.
+     * @return List<String>
+     */
+    @Step("Get customers first names with first name list")
+    public final List<String> getCustomersFirstNames(String firstName) {
+        String productNameSelector = "//table[contains(@class, 'table-bordered')]/tbody/tr/td[1]";
         Wait.waitUntilVisible(driver, productsName);
         return driver
                 .findElements(By.xpath(productNameSelector))
@@ -60,56 +80,41 @@ public class CustomersPage extends BankManagerPage {
     }
 
     /**
-     * Проверяет отсортирован ли список.
-     * @return List<String>
+     * Проверяет отсортирована ли таблица по именам.
+     * @return boolean
      */
-    @Step("Check if the list is sorted")
+    @Step("Check if the table is sorted")
     public boolean isSortedByFirstName() {
-        List<String> names = getCustomers();
-        boolean isSorted = true;
-        for (int i = 0; i < names.size() - 1; i++) {
-            if (names.get(i).compareToIgnoreCase(names.get(i + 1)) > 0) {
-                isSorted = false;
-                break;
-            }
-        }
-        return isSorted;
+        List<String> names = getCustomersFirstNames();
+        return SortChecker.isSorted(names);
     }
 
     /**
-     * Проверяет отсортирован ли список в обратном порядке.
-     * @return List<String>
+     * Проверяет отсортирована ли таблица по именам в обратном порядке.
+     * @return boolean
      */
-    @Step("Check if the list is sorted in reverse order")
-    public boolean isSortedByFirstNameReverse() {
-        List<String> names = getCustomers();
-        boolean isSorted = true;
-        for (int i = 0; i < names.size() - 1; i++) {
-            // current String is > than the next one (if there are equal list is still sorted)
-            if (names.get(i).compareToIgnoreCase(names.get(i + 1)) < 0) {
-                isSorted = false;
-                break;
-            }
-        }
-        return isSorted;
+    @Step("Check if the table is sorted in reverse order")
+    public boolean isSortedByFirstNameInReverse() {
+        List<String> names = getCustomersFirstNames();
+        return SortChecker.isSortedInReverse(names);
     }
 
     /**
      * Сортирует таблицу по именам.
-     * @return текущий экземпляр класса
      */
-    @Step("Отсортировать таблицу по именам")
-    public CustomersPage sortByFirstName() {
+    @Step("Sort table by first names")
+    public void sortByFirstName() {
         Wait.waitThenCLick(driver, sortByFirstNameButton);
-        return new CustomersPage(driver);
     }
 
-    @Step("Delete first customer")
-    public void deleteFirstCustomer() {
-        WebElement firstDeleteButton = driver.findElement(By.cssSelector("tbody tr:first-child td:nth-child(5) button"));
-        Wait.waitThenCLick(driver, firstDeleteButton);
 
-
+    /**
+     * Удаляет из таблицы пользователя с именем.
+     */
+    @Step("Delete customer with first name")
+    public void deleteCustomerWithFirstName(String firstName) {
+        WebElement deleteButton = driver.findElement(By.xpath("//table[contains(@class, 'table-bordered')]/tbody/tr[td[1][text()='" + firstName + "']]/td[5]/button"));
+        Wait.waitThenCLick(driver, deleteButton);
     }
 
 }

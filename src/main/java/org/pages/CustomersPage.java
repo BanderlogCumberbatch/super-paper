@@ -28,7 +28,7 @@ public class CustomersPage extends BankManagerPage {
      * Кнопка сортировки по имени.
      */
     @FindBy(xpath = "//table[contains(@class, 'table-bordered')]/thead/tr/td[1]/a")
-    private WebElement sortByFirstNameButton;
+    WebElement sortByFirstNameButton;
 
     /**
      * Возвращает список со строкой со всеми данными выбранного пользователя.
@@ -103,8 +103,9 @@ public class CustomersPage extends BankManagerPage {
      * Сортирует таблицу по именам.
      */
     @Step("Sort table by first names")
-    public void sortByFirstName() {
+    public CustomersPage sortByFirstName() {
         Wait.waitThenCLick(driver, sortByFirstNameButton);
+        return new CustomersPage(driver);
     }
 
 
@@ -112,9 +113,10 @@ public class CustomersPage extends BankManagerPage {
      * Удаляет из таблицы пользователя с именем.
      */
     @Step("Delete customer with first name")
-    public void deleteCustomerWithFirstName(String firstName) {
+    public CustomersPage deleteCustomerWithFirstName(String firstName) {
         WebElement deleteButton = driver.findElement(By.xpath("//table[contains(@class, 'table-bordered')]/tbody/tr[td[1][text()='" + firstName + "']]/td[5]/button"));
         Wait.waitThenCLick(driver, deleteButton);
+        return new CustomersPage(driver);
     }
 
 }

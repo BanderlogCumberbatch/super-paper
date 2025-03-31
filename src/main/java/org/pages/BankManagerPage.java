@@ -61,30 +61,5 @@ public class BankManagerPage extends BasePage {
         return new CustomersPage(driver);
     }
 
-
-    /**
-     * Проверяет кнопки.
-     * @return текущий экземпляр класса
-     */
-    @Step("Проверить кнопки")
-    public BankManagerPage checkButtons() {
-        Wait.waitUntilVisible(driver, addCustomerPageButton);
-        addCustomerPageButton.isEnabled();
-        addCustomerPageButton.isDisplayed();
-        addCustomerPageButton.click();
-
-        Wait.waitUntilVisible(driver, openAccountButton);
-        openAccountButton.isEnabled();
-        openAccountButton.isDisplayed();
-        openAccountButton.click();
-
-        Wait.waitUntilVisible(driver, customersButton);
-        customersButton.isEnabled();
-        customersButton.isDisplayed();
-        customersButton.click();
-        return new BankManagerPage(driver);
-    }
-
-
 }
 

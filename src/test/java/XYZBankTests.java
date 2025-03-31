@@ -11,7 +11,7 @@ import org.utils.StringFinder;
 import java.util.Collections;
 
 /**
- * Класс тестов для добавления пользователя на www.globalsqa.com.
+ * Класс тестов для globalsqa.com.
  */
 public class XYZBankTests extends BaseTest {
 

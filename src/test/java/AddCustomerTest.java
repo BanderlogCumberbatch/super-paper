@@ -10,7 +10,7 @@ import org.testng.annotations.Test;
 import java.util.Collections;
 
 /**
- * Класс тестов для добавления пользователя на www.globalsqa.com.
+ * Класс тестов добавления пользователей для globalsqa.com.
  */
 public class AddCustomerTest extends BaseTest {
 

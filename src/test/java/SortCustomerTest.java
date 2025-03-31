@@ -6,7 +6,7 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
 /**
- * Класс тестов для добавления пользователя на www.globalsqa.com.
+ * Класс тестов сортировки пользователей для globalsqa.com.
  */
 public class SortCustomerTest extends BaseTest {
 

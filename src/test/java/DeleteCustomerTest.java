@@ -10,7 +10,7 @@ import org.utils.StringFinder;
 import java.util.Collections;
 
 /**
- * Класс тестов для добавления пользователя на www.globalsqa.com.
+ * Класс тестов удаления пользователей для globalsqa.com.
  */
 public class DeleteCustomerTest extends BaseTest {
 

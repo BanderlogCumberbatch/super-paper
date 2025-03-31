@@ -1,30 +1,55 @@
 package org.pages;
 
-import com.google.common.collect.Ordering;
 import io.qameta.allure.Step;
 import org.helpers.Wait;
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.openqa.selenium.support.ui.WebDriverWait;
-import org.pages.elements.BankManagerMenuElements;
-
-import java.time.Duration;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Класс страницы со списком пользователей.
+ */
 public class CustomersPage extends BankManagerPage {
 
     public CustomersPage(final WebDriver webDriver) { super(webDriver); }
 
     String productNameSelector = "//table[contains(@class, 'table-bordered')]/tbody/tr/td[1]";
 
+    /**
+     * Столбец таблицы с именами.
+     */
     @FindBy(xpath = "//table[contains(@class, 'table-bordered')]/tbody/tr/td[1]")
     WebElement productsName;
 
-    @Step("Get selected customers names")
-    public final List<String> getSelectedCustomers(String firstName) {
+    /**
+     * Кнопка сортировки по имени.
+     */
+    @FindBy(xpath = "//table[contains(@class, 'table-bordered')]/thead/tr/td[1]/a")
+    private WebElement sortByFirstNameButton;
+
+    /**
+     * Возвращает список имён пользователей.
+     * @return List<String>
+     */
+    @Step("Get customers names list")
+    public final List <String> getCustomers() {
+        Wait.waitUntilVisible(driver, productsName);
+        return driver
+                .findElements(By.xpath(productNameSelector))
+                .stream()
+                .map(WebElement::getText)
+                .collect(Collectors.toList());
+    }
+
+    /**
+     * Возвращает список имён пользователей.
+     * @return List<String>
+     */
+    @Step("Get customers names list")
+    public final List<String> getCustomers(String firstName) {
         Wait.waitUntilVisible(driver, productsName);
         return driver
                 .findElements(By.xpath(productNameSelector))
@@ -34,11 +59,50 @@ public class CustomersPage extends BankManagerPage {
                 .collect(Collectors.toList());
     }
 
-    public boolean isSortedByFirstNameAscending(String firstName) {
+    /**
+     * Проверяет отсортирован ли список.
+     * @return List<String>
+     */
+    @Step("Check if the list is sorted")
+    public boolean isSortedByFirstName() {
+        List<String> names = getCustomers();
+        boolean isSorted = true;
+        for (int i = 0; i < names.size() - 1; i++) {
+            // current String is > than the next one (if there are equal list is still sorted)
+            if (names.get(i).compareToIgnoreCase(names.get(i + 1)) > 0) {
+                isSorted = false;
+                break;
+            }
+        }
+        return isSorted;
+    }
 
+    /**
+     * Проверяет отсортирован ли список в обратном порядке.
+     * @return List<String>
+     */
+    @Step("Check if the list is sorted in reverse order")
+    public boolean isSortedByFirstNameReverse() {
+        List<String> names = getCustomers();
+        boolean isSorted = true;
+        for (int i = 0; i < names.size() - 1; i++) {
+            // current String is > than the next one (if there are equal list is still sorted)
+            if (names.get(i).compareToIgnoreCase(names.get(i + 1)) < 0) {
+                isSorted = false;
+                break;
+            }
+        }
+        return isSorted;
+    }
 
-        List<String> names = getSelectedCustomers(firstName);
-        return Ordering.natural().isOrdered(names);
+    /**
+     * Сортирует таблицу по именам.
+     * @return текущий экземпляр класса
+     */
+    @Step("Отсортировать таблицу по именам")
+    public CustomersPage sortByFirstName() {
+        Wait.waitThenCLick(driver, sortByFirstNameButton);
+        return new CustomersPage(driver);
     }
 
     @Step("Delete first customer")

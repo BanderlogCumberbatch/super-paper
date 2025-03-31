@@ -6,8 +6,10 @@ import org.openqa.selenium.Alert;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-import org.pages.elements.BankManagerMenuElements;
 
+/**
+ * Класс страницы для добавления пользователей.
+ */
 public class AddCustomerPage extends BankManagerPage {
 
     /**
@@ -48,6 +50,7 @@ public class AddCustomerPage extends BankManagerPage {
         postCodeInput.sendKeys(postCode);
         addCustomerButton.click();
         Alert alert = driver.switchTo().alert();
+        Wait.waitUntilAlert(driver);
         alert.accept();
         return new AddCustomerPage(driver);
     }

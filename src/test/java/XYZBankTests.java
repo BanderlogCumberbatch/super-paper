@@ -1,21 +1,17 @@
-import com.beust.jcommander.defaultprovider.PropertyFileDefaultProvider;
 import generator.TestDataGenerator;
-import org.pages.AddCustomerPage;
+import org.pages.BankManagerPage;
 import org.pages.CustomersPage;
-import org.pages.StartPage;
 import org.testng.Assert;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
-import org.testng.asserts.SoftAssert;
 
-import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
 /**
- * Класс тестов для www.globalsqa.com.
+ * Класс тестов для добавления пользователя на www.globalsqa.com.
  */
 public class XYZBankTests extends BaseTest {
 
@@ -28,36 +24,47 @@ public class XYZBankTests extends BaseTest {
         };
     }
 
-    AddCustomerPage addCustomerPage;
+    BankManagerPage bankManagerPage;
+
+    CustomersPage customersPage;
 
     @BeforeMethod
     public final void setup() {
-        addCustomerPage = startPage.goToBankManagerPage()
+        bankManagerPage = startPage.goToBankManagerPage()
                 .goToAddCustomerPage();
     }
 
     /**
-     * Тест перехода на страницу менеджера.
+     * Тест добавления пользователя.
      */
-    @Test(description = "Go to bank manager page", dataProvider = "Add customers data" )
+    @Test(description = "Add customer test", dataProvider = "Add customers data" )
     public void addCustomerTest(String postCode, String lastName, String firstName) {
-        SoftAssert softAssert = new SoftAssert();
-        List<String> selectedCustomers = addCustomerPage.addCustomer(firstName, lastName, postCode)
-                .goToCustomersPage()
-                .getSelectedCustomers(firstName);
+        customersPage = bankManagerPage
+                .goToAddCustomerPage()
+                .addCustomer(firstName, lastName, postCode)
+                .goToCustomersPage();
+        List<String> selectedCustomers = customersPage.getCustomers(firstName);
         Assert.assertEquals(selectedCustomers, Collections.singletonList(firstName));
-        addCustomerPage.goToStartPage();
+        startPage.goToStartPage();
     }
 
-//    Arrays.asList(firstName, lastName, postCode)
-//    @Test(description = "Go to bank manager page", dataProvider = "Add customers data" )
-//    public void addCustomerTest(String postCode, String lastName, String firstName) {
+    /**
+     * Тест сортировки пользователей.
+     */
+    @Test(description = "Sort customers")
+    public void sortCustomersTest() {
 //        SoftAssert softAssert = new SoftAssert();
-//        CustomersPage customersPage = addCustomerPage.addCustomer(firstName, lastName, postCode)
-//                .goToCustomersPage()
-//                .checkCustomer(firstName, lastName, postCode);
-//        customersPage.goToStartPage();
-//    }
+        customersPage = bankManagerPage
+                .goToCustomersPage();
+        customersPage = customersPage.sortByFirstName();
+        Assert.assertTrue(customersPage.isSortedByFirstNameReverse());
+        customersPage = customersPage.sortByFirstName();
+        Assert.assertTrue(customersPage.isSortedByFirstName());
+        customersPage.goToStartPage();
+    }
+
+//    new WebDriverWait(driver, Duration.ofSeconds(10));
+//    Arrays.asList(firstName, lastName, postCode)
 
     @AfterMethod
     public final void clearCookies() {

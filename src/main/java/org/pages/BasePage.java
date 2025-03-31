@@ -38,7 +38,7 @@ public class BasePage {
      * Переходит на стартовую страницу.
      * @return текущий экземпляр класса
      */
-    @Step("Перейти на стартовую страницу")
+    @Step("Go to start page")
     public StartPage goToStartPage() {
         Wait.waitThenCLick(driver, toStartPageButton);
         return new StartPage(driver);

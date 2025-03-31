@@ -16,13 +16,13 @@ public class StartPage extends BasePage {
      * Кнопка входа в качестве пользователя.
      */
     @FindBy(xpath = "//*[contains(@ng-click, 'customer()')]")
-    private WebElement customerLoginButton;
+    WebElement customerLoginButton;
 
     /**
      * Кнопка входа в качестве менеджера.
      */
     @FindBy(xpath = "//*[contains(@ng-click, 'manager()')]")
-    private WebElement bankMangerLoginButton;
+    WebElement bankMangerLoginButton;
 
     public StartPage(final WebDriver webDriver) { super(webDriver); }
 
@@ -30,7 +30,7 @@ public class StartPage extends BasePage {
      * Переходит на страницу менеджера.
      * @return текущий экземпляр класса
      */
-    @Step("Перейти на страницу менеджера")
+    @Step("Go to bank manager page")
     public BankManagerPage goToBankManagerPage() {
         Wait.waitThenCLick(driver, bankMangerLoginButton);
         return new BankManagerPage(driver);

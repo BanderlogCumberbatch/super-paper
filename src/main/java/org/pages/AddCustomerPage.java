@@ -42,7 +42,7 @@ public class AddCustomerPage extends BankManagerPage {
      * Добавляет пользователя.
      * @return текущий экземпляр класса
      */
-    @Step("Добавить пользователя")
+    @Step("Add customer")
     public AddCustomerPage addCustomer(String firstName, String lastName, String postCode) {
         Wait.waitUntilVisible(driver, firstNameInput);
         firstNameInput.sendKeys(firstName);

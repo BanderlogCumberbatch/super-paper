@@ -68,7 +68,6 @@ public class CustomersPage extends BankManagerPage {
         List<String> names = getCustomers();
         boolean isSorted = true;
         for (int i = 0; i < names.size() - 1; i++) {
-            // current String is > than the next one (if there are equal list is still sorted)
             if (names.get(i).compareToIgnoreCase(names.get(i + 1)) > 0) {
                 isSorted = false;
                 break;
@@ -113,10 +112,4 @@ public class CustomersPage extends BankManagerPage {
 
     }
 
-    @Step("Get selected product names")
-    public final CustomersPage checkCustomer(String firstName, String lastName, String postCode) {
-        Wait.waitUntilVisible(driver, mainHeading);
-        Wait.waitUntilVisible(driver, driver.findElement(By.xpath("//*[contains(text(), '" + firstName + "')]")), 5000);
-        return new CustomersPage(driver);
-    }
 }

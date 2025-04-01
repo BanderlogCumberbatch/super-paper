@@ -25,8 +25,16 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y google-chrome-stable
+          CHROME_BIN=$(/usr/bin/google-chrome)
+          echo "Chrome установлен по пути: $CHROME_BIN"
           sudo apt install -y chromium-chromedriver
-          echo "Chrome и WebDriver установлены"
+          echo "WebDriver установлен"
 
-      - name: Запуск Selenium-тестов
-        run: mvn test
+      - name: Проверка установки Chrome
+        run: google-chrome --version
+
+      - name: Запуск тестов с TestNG
+        run: mvn test -Dsurefire.suiteXmlFiles=test_suite.xml
+
+      - name: Запуск параллельных тестов с TestNG
+        run: mvn test -Dsurefire.suiteXmlFiles=test_suite_parallel.xml

@@ -30,6 +30,7 @@ public class BaseTest {
                 .addArguments("--remote-allow-origins=*")
                 .addArguments("--disable-gpu")
                 .addArguments("--start-maximized")
+        .setBinary("/usr/bin/google-chrome") // Указываем путь к Chrome
         .addArguments("--headless")  // Запуск без GUI
         .addArguments("--no-sandbox") // Для GitHub Actions
         .addArguments("--disable-dev-shm-usage")); // Улучшает стабильность в CI/CD

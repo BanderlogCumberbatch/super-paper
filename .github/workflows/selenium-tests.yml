@@ -34,7 +34,7 @@ jobs:
         run: google-chrome --version
 
       - name: Запуск тестов с TestNG
-        run: mvn test -Dsurefire.suiteXmlFiles=test_suite.xml
+        run: mvn test -Dsurefire.suiteXmlFiles=src/test/resources/test_suite.xml
 
       - name: Запуск параллельных тестов с TestNG
-        run: mvn test -Dsurefire.suiteXmlFiles=test_suite_parallel.xml
+        run: mvn test -Dsurefire.suiteXmlFiles=src/test/resources/test_suite_parallel.xml

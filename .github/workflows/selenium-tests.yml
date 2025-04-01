@@ -23,12 +23,12 @@ jobs:
 
       - name: Установка Chrome и WebDriver
         run: |
-          sudo apt update
-          sudo apt install -y google-chrome-stable
-          CHROME_BIN=$(which google-chrome)
-          echo "Chrome установлен по пути: $CHROME_BIN"
-          sudo apt install -y chromium-chromedriver
-          echo "WebDriver установлен"
+          CHROME_VERSION=$(google-chrome --version | grep -oP '[0-9]+\.[0-9]+\.[0-9]+')
+          CHROMEDRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_RELEASE_$CHROME_VERSION)
+          wget -N https://chromedriver.storage.googleapis.com/$CHROMEDRIVER_VERSION/chromedriver_linux64.zip
+          unzip chromedriver_linux64.zip
+          sudo mv chromedriver /usr/local/bin/
+          sudo chmod +x /usr/local/bin/chromedriver
 
       - name: Проверка установки Chrome
         run: |

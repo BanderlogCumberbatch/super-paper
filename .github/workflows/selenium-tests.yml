@@ -25,7 +25,7 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y google-chrome-stable
-          CHROME_BIN=$(/usr/bin/google-chrome)
+          CHROME_BIN=$(which google-chrome)
           echo "Chrome установлен по пути: $CHROME_BIN"
           sudo apt install -y chromium-chromedriver
           echo "WebDriver установлен"

@@ -31,7 +31,10 @@ jobs:
           echo "WebDriver установлен"
 
       - name: Проверка установки Chrome
-        run: google-chrome --version
+        run: |
+          google-chrome --version
+          ls -l /usr/bin/google-chrome
+          which google-chrome
 
       - name: Запуск тестов с TestNG
         run: mvn test -Dsurefire.suiteXmlFiles=src/test/resources/test_suite.xml

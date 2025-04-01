@@ -33,9 +33,6 @@ jobs:
       - name: Проверка установки Chrome
         run: google-chrome --version
 
-      - name: Установка прав на запуск Chrome
-        run: chmod +x /usr/bin/google-chrome
-
       - name: Запуск тестов с TestNG
         run: mvn test -Dsurefire.suiteXmlFiles=src/test/resources/test_suite.xml
 

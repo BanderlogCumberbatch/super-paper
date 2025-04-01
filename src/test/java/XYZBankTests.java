@@ -7,7 +7,6 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 import org.utils.StringFinder;
-
 import java.util.Collections;
 
 /**
@@ -44,10 +43,10 @@ public class XYZBankTests extends BaseTest {
         customersPage = bankManagerPage
                 .goToAddCustomerPage()
                 .addCustomer(firstName, lastName, postCode)
-                .addCustomer(firstName, lastName, postCode) // Проверка на дубликаты
+                .addCustomer(firstName, lastName, postCode) // Ещё одно добавление нового пользователя с теми же данными для проверки на дубликаты
                 .goToCustomersPage();
-        Assert.assertEquals(customersPage.getSelectedCustomers(firstName, lastName, postCode), Collections.singletonList(String.format("%s %s %s Delete", firstName, lastName, postCode))); // Вид ожидаемой строки c данными: "firstName lastName postCode Delete"
-        customersPage.goToStartPage();
+
+        Assert.assertEquals(customersPage.getSelectedCustomers(firstName, lastName, postCode), Collections.singletonList(String.format("%s %s %s Delete", firstName, lastName, postCode))); // Проверка добавления нового пользователя (равенство полученных данных с ожидаемой строкой вида: "firstName lastName postCode Delete")
     }
 
     /**
@@ -58,33 +57,35 @@ public class XYZBankTests extends BaseTest {
         customersPage = bankManagerPage
                 .goToCustomersPage();
         customersPage.sortByFirstName();
-        Assert.assertTrue(customersPage.isSortedByFirstNameInReverse());    // Сортировка в обратном порядке
+
+        Assert.assertTrue(customersPage.isSortedByFirstNameInReverse());    // Проверка сортировки имён в обратном порядке
         customersPage.sortByFirstName();
-        Assert.assertTrue(customersPage.isSortedByFirstName()); // Обычная сортировка
-        customersPage.goToStartPage();
+        Assert.assertTrue(customersPage.isSortedByFirstName()); // Проверка обычной сортировки имён
     }
 
     /**
-     * Тест удаления пользователей.
+     * Тест удаления пользователя.
      */
     @Test(description = "Delete customer test")
     public void deleteCustomerTest() {
         customersPage = bankManagerPage
-                .goToCustomersPage();
+                .goToCustomersPage()
+                .sortByFirstName()
+                .sortByFirstName();
         String firstName = StringFinder.getTheMostAverage(customersPage.getCustomersFirstNames());
-        Assert.assertEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName));     // До удаления
+
+        Assert.assertEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName));     // Проверка присутствия строки с определённым именем до удаления
         customersPage.deleteCustomerWithFirstName(firstName);
-        Assert.assertNotEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName));  // После удаления
-        customersPage.goToStartPage();
+        Assert.assertNotEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName));  // Проверка отсутствия строки с определённым именем после удаления
     }
 
     /**
      * Действия после теста.
      */
     @AfterMethod
-    public final void clearCookies() {
+    public final void goToStartAndClearCookies() {
+        customersPage.goToStartPage();
         driver.manage().deleteAllCookies();
         driver.navigate().refresh();
     }
-
 }

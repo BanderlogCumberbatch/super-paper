@@ -4,14 +4,12 @@ import org.helpers.Wait;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
-
 import io.qameta.allure.Step;
 
 /**
  * Класс стартовой страницы.
  */
 public class StartPage extends BasePage {
-
     /**
      * Кнопка входа в качестве пользователя.
      */
@@ -35,6 +33,4 @@ public class StartPage extends BasePage {
         Wait.waitThenCLick(driver, bankMangerLoginButton);
         return new BankManagerPage(driver);
     }
-
-
 }

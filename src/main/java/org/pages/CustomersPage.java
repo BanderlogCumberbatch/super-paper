@@ -7,7 +7,6 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.support.FindBy;
 import org.utils.SortChecker;
-
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -31,18 +30,32 @@ public class CustomersPage extends BankManagerPage {
     WebElement sortByFirstNameButton;
 
     /**
+     * Селектор выбирающий из таблицы список всех имён.
+     */
+    private final String productNamesSelector = "//table[contains(@class, 'table-bordered')]/tbody/tr/td[1]";
+
+    /**
+     * Селектор выбирающий из таблицы все данные строки с определенными значениями 1-го, 2-го и 3-го элементов (имя, фамилия, почтовый индекс).
+     */
+    private final String productDataSelector = "//table[contains(@class, 'table-bordered')]/tbody/tr[" +
+            "td[1][text()='%s'] and " +
+            "td[2][text()='%s'] and " +
+            "td[3][text()='%s']]";
+
+    /**
+     * Селектор выбирающий из таблицы 5-й элемент строки (кнопку удаления) с определённым значением 1-го элемента (имя).
+     */
+    private final String deleteButtonSelector = "//table[contains(@class, 'table-bordered')]/tbody/tr[td[1][text()='%s']]/td[5]/button";
+
+    /**
      * Возвращает список со строкой со всеми данными выбранного пользователя.
      * @return List<String>
      */
     @Step("Get selected customers data string")
     public final List<String> getSelectedCustomers(String firstName, String lastName, String postCode) {
-        String productNameSelector = String.format("//table[contains(@class, 'table-bordered')]/tbody/tr[" +
-                "td[1][text()='%s'] and " +
-                "td[2][text()='%s'] and " +
-                "td[3][text()='%s']]", firstName, lastName, postCode);
         Wait.waitUntilVisible(driver, productsName);
         return driver
-                .findElements(By.xpath(productNameSelector))
+                .findElements(By.xpath(String.format(productDataSelector, firstName, lastName, postCode)))
                 .stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
@@ -54,10 +67,9 @@ public class CustomersPage extends BankManagerPage {
      */
     @Step("Get customers first names list")
     public final List<String> getCustomersFirstNames() {
-        String productNameSelector = "//table[contains(@class, 'table-bordered')]/tbody/tr/td[1]";
         Wait.waitUntilVisible(driver, productsName);
         return driver
-                .findElements(By.xpath(productNameSelector))
+                .findElements(By.xpath(productNamesSelector))
                 .stream()
                 .map(WebElement::getText)
                 .collect(Collectors.toList());
@@ -69,10 +81,9 @@ public class CustomersPage extends BankManagerPage {
      */
     @Step("Get customers first names with first name list")
     public final List<String> getCustomersFirstNames(String firstName) {
-        String productNameSelector = "//table[contains(@class, 'table-bordered')]/tbody/tr/td[1]";
         Wait.waitUntilVisible(driver, productsName);
         return driver
-                .findElements(By.xpath(productNameSelector))
+                .findElements(By.xpath(productNamesSelector))
                 .stream()
                 .map(WebElement::getText)
                 .filter(s -> s.equals(firstName))
@@ -108,15 +119,13 @@ public class CustomersPage extends BankManagerPage {
         return new CustomersPage(driver);
     }
 
-
     /**
      * Удаляет из таблицы пользователя с именем.
      */
     @Step("Delete customer with first name")
     public CustomersPage deleteCustomerWithFirstName(String firstName) {
-        WebElement deleteButton = driver.findElement(By.xpath("//table[contains(@class, 'table-bordered')]/tbody/tr[td[1][text()='" + firstName + "']]/td[5]/button"));
+        WebElement deleteButton = driver.findElement(By.xpath(String.format(deleteButtonSelector, firstName)));
         Wait.waitThenCLick(driver, deleteButton);
         return new CustomersPage(driver);
     }
-
 }

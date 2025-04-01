@@ -11,6 +11,7 @@ import org.openqa.selenium.support.PageFactory;
  * Базовая страница.
  */
 public class BasePage {
+
     protected final WebDriver driver;
 
     /**
@@ -43,5 +44,4 @@ public class BasePage {
         Wait.waitThenCLick(driver, toStartPageButton);
         return new StartPage(driver);
     }
-
 }

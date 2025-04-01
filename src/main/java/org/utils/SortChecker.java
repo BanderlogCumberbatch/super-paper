@@ -1,22 +1,21 @@
 package org.utils;
 
+import com.google.common.collect.Lists;
 import java.util.List;
 
 public class SortChecker {
-
     /**
      * Проверяет отсортирован ли список.
      * @return boolean
      */
     public static boolean isSorted(List<String> list) {
-        boolean isSorted = true;
-        for (int i = 0; i < list.size() - 1; i++) {
-            if (list.get(i).compareToIgnoreCase(list.get(i + 1)) > 0) {
-                isSorted = false;
-                break;
-            }
+        String previous = "";
+        for (final String current: list) {
+            if (current.compareToIgnoreCase(previous) < 0)
+                return false;
+            previous = current;
         }
-        return isSorted;
+        return true;
     }
 
     /**
@@ -24,13 +23,12 @@ public class SortChecker {
      * @return boolean
      */
     public static boolean isSortedInReverse(List<String> list) {
-        boolean isSorted = true;
-        for (int i = 0; i < list.size() - 1; i++) {
-            if (list.get(i).compareToIgnoreCase(list.get(i + 1)) < 0) {
-                isSorted = false;
-                break;
-            }
+        String previous = "";
+        for (final String current: Lists.reverse(list)) {
+            if (current.compareToIgnoreCase(previous) < 0)
+                return false;
+            previous = current;
         }
-        return isSorted;
+        return true;
     }
 }

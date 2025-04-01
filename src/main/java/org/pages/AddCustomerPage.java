@@ -1,5 +1,4 @@
 package org.pages;
-
 import io.qameta.allure.Step;
 import org.helpers.Wait;
 import org.openqa.selenium.Alert;
@@ -11,7 +10,6 @@ import org.openqa.selenium.support.FindBy;
  * Класс страницы для добавления пользователей.
  */
 public class AddCustomerPage extends BankManagerPage {
-
     /**
      * Поле для ввода имени.
      */

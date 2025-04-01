@@ -8,7 +8,7 @@ import org.testng.annotations.Test;
 /**
  * Класс тестов сортировки пользователей для globalsqa.com.
  */
-public class SortCustomerTest extends BaseTest {
+public class SortCustomersTest extends BaseTest {
 
     BankManagerPage bankManagerPage;
 
@@ -30,17 +30,18 @@ public class SortCustomerTest extends BaseTest {
         customersPage = bankManagerPage
                 .goToCustomersPage();
         customersPage.sortByFirstName();
-        Assert.assertTrue(customersPage.isSortedByFirstNameInReverse());    // Сортировка в обратном порядке
+
+        Assert.assertTrue(customersPage.isSortedByFirstNameInReverse());    // Проверка сортировки имён в обратном порядке
         customersPage.sortByFirstName();
-        Assert.assertTrue(customersPage.isSortedByFirstName()); // Обычная сортировка
-        customersPage.goToStartPage();
+        Assert.assertTrue(customersPage.isSortedByFirstName()); // Проверка обычной сортировки имён
     }
 
     /**
      * Действия после теста.
      */
     @AfterMethod
-    public final void clearCookies() {
+    public final void goToStartAndClearCookies() {
+        customersPage.goToStartPage();
         driver.manage().deleteAllCookies();
         driver.navigate().refresh();
     }

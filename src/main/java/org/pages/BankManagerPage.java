@@ -10,7 +10,6 @@ import io.qameta.allure.Step;
  * Класс страницы менеджера.
  */
 public class BankManagerPage extends BasePage {
-
     /**
      * Кнопка перехода на страницу добавления пользователя.
      */
@@ -60,6 +59,5 @@ public class BankManagerPage extends BasePage {
         Wait.waitThenCLick(driver, customersButton);
         return new CustomersPage(driver);
     }
-
 }
 

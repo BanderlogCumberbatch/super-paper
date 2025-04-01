@@ -1,4 +1,3 @@
-
 import org.pages.BankManagerPage;
 import org.pages.CustomersPage;
 import org.testng.Assert;
@@ -6,13 +5,12 @@ import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import org.utils.StringFinder;
-
 import java.util.Collections;
 
 /**
  * Класс тестов удаления пользователей для globalsqa.com.
  */
-public class DeleteCustomerTest extends BaseTest {
+public class DeleteCustomersTest extends BaseTest {
 
     BankManagerPage bankManagerPage;
 
@@ -34,19 +32,19 @@ public class DeleteCustomerTest extends BaseTest {
         customersPage = bankManagerPage
                 .goToCustomersPage();
         String firstName = StringFinder.getTheMostAverage(customersPage.getCustomersFirstNames());
-        Assert.assertEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName));     // До удаления
+
+        Assert.assertEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName));     // Проверка присутствия строки с определённым именем до удаления
         customersPage.deleteCustomerWithFirstName(firstName);
-        Assert.assertNotEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName));  // После удаления
-        customersPage.goToStartPage();
+        Assert.assertNotEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName));  // Проверка отсутствия строки с определённым именем после удаления
     }
 
     /**
      * Действия после теста.
      */
     @AfterMethod
-    public final void clearCookies() {
+    public final void goToStartAndClearCookies() {
+        customersPage.goToStartPage();
         driver.manage().deleteAllCookies();
         driver.navigate().refresh();
     }
-
 }

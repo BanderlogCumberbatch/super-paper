@@ -42,10 +42,10 @@ public class AddCustomersTest extends BaseTest {
         customersPage = bankManagerPage
                 .goToAddCustomerPage()
                 .addCustomer(firstName, lastName, postCode)
-                .addCustomer(firstName, lastName, postCode) // Ещё одно добавление нового пользователя с теми же данными для проверки на дубликаты
+                .addCustomer(firstName, lastName, postCode)
                 .goToCustomersPage();
 
-        Assert.assertEquals(customersPage.getSelectedCustomers(firstName, lastName, postCode), Collections.singletonList(String.format("%s %s %s Delete", firstName, lastName, postCode))); // Проверка добавления нового пользователя (равенство полученных данных с ожидаемой строкой вида: "firstName lastName postCode Delete")
+        Assert.assertEquals(customersPage.getSelectedCustomers(firstName, lastName, postCode), Collections.singletonList(String.format("%s %s %s Delete", firstName, lastName, postCode)), "Данные не сходятся с ожидаемой строкой вида: firstName lastName postCode Delete)");
     }
 
 

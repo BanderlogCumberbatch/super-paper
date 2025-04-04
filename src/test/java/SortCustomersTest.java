@@ -31,9 +31,9 @@ public class SortCustomersTest extends BaseTest {
                 .goToCustomersPage();
         customersPage.sortByFirstName();
 
-        Assert.assertTrue(customersPage.isSortedByFirstNameInReverse());    // Проверка сортировки имён в обратном порядке
+        Assert.assertTrue(customersPage.isSortedByFirstNameInReverse(), "Имена не отсортированы в обратном порядке");
         customersPage.sortByFirstName();
-        Assert.assertTrue(customersPage.isSortedByFirstName()); // Проверка обычной сортировки имён
+        Assert.assertTrue(customersPage.isSortedByFirstName(), "Имена не отсортированы");
     }
 
     /**

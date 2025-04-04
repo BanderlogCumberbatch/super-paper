@@ -43,10 +43,10 @@ public class XYZBankTests extends BaseTest {
         customersPage = bankManagerPage
                 .goToAddCustomerPage()
                 .addCustomer(firstName, lastName, postCode)
-                .addCustomer(firstName, lastName, postCode) // Ещё одно добавление нового пользователя с теми же данными для проверки на дубликаты
+                .addCustomer(firstName, lastName, postCode)
                 .goToCustomersPage();
 
-        Assert.assertEquals(customersPage.getSelectedCustomers(firstName, lastName, postCode), Collections.singletonList(String.format("%s %s %s Delete", firstName, lastName, postCode))); // Проверка добавления нового пользователя (равенство полученных данных с ожидаемой строкой вида: "firstName lastName postCode Delete")
+        Assert.assertEquals(customersPage.getSelectedCustomers(firstName, lastName, postCode), Collections.singletonList(String.format("%s %s %s Delete", firstName, lastName, postCode)), "Данные не сходятся с ожидаемой строкой вида: firstName lastName postCode Delete)");
     }
 
     /**
@@ -58,9 +58,9 @@ public class XYZBankTests extends BaseTest {
                 .goToCustomersPage();
         customersPage.sortByFirstName();
 
-        Assert.assertTrue(customersPage.isSortedByFirstNameInReverse());    // Проверка сортировки имён в обратном порядке
+        Assert.assertTrue(customersPage.isSortedByFirstNameInReverse(), "Имена не отсортированы в обратном порядке");
         customersPage.sortByFirstName();
-        Assert.assertTrue(customersPage.isSortedByFirstName()); // Проверка обычной сортировки имён
+        Assert.assertTrue(customersPage.isSortedByFirstName(), "Имена не отсортированы");
     }
 
     /**
@@ -74,9 +74,9 @@ public class XYZBankTests extends BaseTest {
                 .sortByFirstName();
         String firstName = StringFinder.getTheMostAverage(customersPage.getCustomersFirstNames());
 
-        Assert.assertEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName));     // Проверка присутствия строки с определённым именем до удаления
+        Assert.assertEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName), "Удаляемая строка не существует до удаления");
         customersPage.deleteCustomerWithFirstName(firstName);
-        Assert.assertNotEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName));  // Проверка отсутствия строки с определённым именем после удаления
+        Assert.assertNotEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName), "Удаляемая строка существует после удаления");
     }
 
     /**

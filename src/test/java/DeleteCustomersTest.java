@@ -33,9 +33,9 @@ public class DeleteCustomersTest extends BaseTest {
                 .goToCustomersPage();
         String firstName = StringFinder.getTheMostAverage(customersPage.getCustomersFirstNames());
 
-        Assert.assertEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName));     // Проверка присутствия строки с определённым именем до удаления
+        Assert.assertEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName), "Удаляемая строка не существует до удаления");
         customersPage.deleteCustomerWithFirstName(firstName);
-        Assert.assertNotEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName));  // Проверка отсутствия строки с определённым именем после удаления
+        Assert.assertNotEquals(customersPage.getCustomersFirstNames(firstName), Collections.singletonList(firstName), "Удаляемая строка существует после удаления");
     }
 
     /**

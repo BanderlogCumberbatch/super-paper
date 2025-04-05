@@ -131,11 +131,6 @@ public class APIServiceTests {
         softAssertion.assertAll();
     }
 
-//    @Test
-//    public void del() {
-//        BaseRequests.deleteEntitiesById(List.of("53", "59", "63", "70", "76", "81"));
-//    }
-
     /**
      * Действия после тестов.
      */

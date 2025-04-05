@@ -10,22 +10,27 @@ import lombok.Setter;
 public class Response {
 
     /**
-     * Id пользователя
+     * Дополнительная информация
      */
-    private String id;
+    private Addition addition;
 
     /**
-     * Имя пользователя
+     * ID сущности
      */
-    private String job;
+    private int id;
 
     /**
-     * Работа пользователя
+     * "Важные" номера
      */
-    private String name;
+    int[] important_numbers;
 
     /**
-     * Дата создания
+     * Заголовок сущности
      */
-    private String creationAt;
+    private String title;
+
+    /**
+     * Верифицирован
+     */
+    private Boolean verified;
 }

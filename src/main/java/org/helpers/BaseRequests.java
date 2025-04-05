@@ -6,10 +6,14 @@ import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 
 import java.io.IOException;
+import java.util.List;
 
 import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.requestSpecification;
 
+/**
+ * Базовый класс спецификации запроса.
+ */
 public class BaseRequests {
 
     /**
@@ -29,14 +33,16 @@ public class BaseRequests {
     /**
      * Подготовка спецификации запроса
      *
-     * @param userId id пользователя, которого необходимо удалить
+     * @param entitiesId список id пользователей, которых необходимо удалить
      */
-    public static void deleteUserById(String userId) {
+    public static void deleteEntitiesById(List<String> entitiesId) {
 
-        given()
-                .when()
-                .delete("api/users" + userId)
-                .then()
-                .statusCode(204);
+        for (String entityId : entitiesId) {
+            given()
+                    .when()
+                    .delete("/api/delete/" + entityId)
+                    .then()
+                    .statusCode(204);
+        }
     }
 }

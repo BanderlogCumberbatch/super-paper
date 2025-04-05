@@ -2,8 +2,7 @@
 <suite name="suite">
    <test name="test suite api">
        <classes>
-           <class name="GetUserTest"/>
-           <class name="CreateUserTest"/>
+           <class name="apitest.APIServiceTests"/>
       </classes>
     </test>
 </suite>

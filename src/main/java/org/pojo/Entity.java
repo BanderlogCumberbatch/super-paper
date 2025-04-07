@@ -1,5 +1,6 @@
 package org.pojo;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -13,13 +14,14 @@ public class Entity {
      * Дополнительная информация
      */
     @Builder.Default
-    private Addition addition = Addition.builder().additional_info("Дополнительные сведения").additional_number(123).build();
+    private Addition addition = Addition.builder().additionalInfo("Дополнительные сведения").additionalNumber(123).build();
 
     /**
      * "Важные" номера
      */
     @Builder.Default
-    int[] important_numbers  = new int[] {42, 87, 15};;
+    @SerializedName("important_numbers")
+    int[] importantNumbers = new int[] {42, 87, 15};
 
     /**
      * Заголовок сущности

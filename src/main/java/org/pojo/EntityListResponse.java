@@ -10,5 +10,5 @@ public class EntityListResponse {
     /**
      * Список сущностей
      */
-    private List<Response> entity; // Название поля должно совпадать с JSON ("entity")
+    private List<Response> entity;
 }

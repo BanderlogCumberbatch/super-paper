@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.requestSpecification;
 
 /**
@@ -49,17 +48,10 @@ public class CreateEntitiesTest {
     public void testCreateEntityWithSerialization(String title, Boolean verified, String additional_info) {
         Entity entityPojo = Entity.builder()
                 .title(title).verified(verified)
-                .addition(Addition.builder().additional_info(additional_info).build())
+                .addition(Addition.builder().additionalInfo(additional_info).build())
                 .build();
 
-        entitiesId.add(given()
-                .spec(requestSpecification)
-                .body(entityPojo)
-                .when()
-                .post("/api/create")
-                .then()
-                .statusCode(200)
-                .extract().asString());
+        BaseRequests.createEntity(entitiesId, entityPojo);
     }
 
     /**

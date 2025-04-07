@@ -1,5 +1,6 @@
 package org.pojo;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -22,7 +23,8 @@ public class Response {
     /**
      * "Важные" номера
      */
-    int[] important_numbers;
+    @SerializedName("important_numbers")
+    int[] importantNumbers;
 
     /**
      * Заголовок сущности

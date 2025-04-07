@@ -1,5 +1,6 @@
 package org.pojo;
 
+import com.google.gson.annotations.SerializedName;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.Setter;
@@ -12,12 +13,14 @@ public class Addition {
     /**
      * Дополнительные сведения
      */
-    private String additional_info;
+    @SerializedName("additional_info")
+    private String additionalInfo;
 
     /**
      * Дополнительный номер
      */
-    private int additional_number;
+    @SerializedName("additional_number")
+    private int additionalNumber;
 
     /**
      * ID

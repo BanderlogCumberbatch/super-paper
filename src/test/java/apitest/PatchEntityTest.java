@@ -13,7 +13,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import static io.restassured.RestAssured.given;
 import static io.restassured.RestAssured.requestSpecification;
 
 /**
@@ -48,31 +47,17 @@ public class PatchEntityTest {
     public void testPatchEntity(String title, Boolean verified, String additional_info) {
         Entity entityPojo = Entity.builder()
                 .title(title).verified(verified)
-                .addition(Addition.builder().additional_info(additional_info).build())
+                .addition(Addition.builder().additionalInfo(additional_info).build())
                 .build();
 
-        entitiesId.add(given()
-                .spec(requestSpecification)
-                .body(entityPojo)
-                .when()
-                .post("/api/create")
-                .then()
-                .statusCode(200)
-                .extract().asString());
+        BaseRequests.createEntity(entitiesId, entityPojo);
 
         entityPojo = Entity.builder()
                 .title(PropertyProvider.getInstance().getProperty("prof.unverified.title")).verified(false)
-                .addition(Addition.builder().additional_info(PropertyProvider.getInstance().getProperty("prof.unverified.info")).build())
+                .addition(Addition.builder().additionalInfo(PropertyProvider.getInstance().getProperty("prof.unverified.info")).build())
                 .build();
 
-        given()
-                .spec(requestSpecification)
-                .body(entityPojo)
-                .when()
-                .patch("/api/patch/" + entitiesId.get(0))
-                .then()
-                .statusCode(204)
-                .extract().asString();
+        BaseRequests.patchEntityById(entitiesId.get(0), entityPojo);
     }
 
     /**

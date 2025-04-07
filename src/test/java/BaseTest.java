@@ -30,9 +30,6 @@ public class BaseTest {
                 .addArguments("--remote-allow-origins=*")
                 .addArguments("--disable-gpu")
                 .addArguments("--start-maximized"));
-//        .addArguments("--headless")  // Запуск без GUI
-//        .addArguments("--no-sandbox") // Для GitHub Actions
-//        .addArguments("--disable-dev-shm-usage")); // Улучшает стабильность в CI/CD
         driver.manage().window().maximize();
         driver.manage().timeouts()
                 .pageLoadTimeout(Duration.ofSeconds(pageLoadTimeout));

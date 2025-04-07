@@ -61,9 +61,10 @@ public class BaseRequests {
     public static Response getEntityById(String entityId) {
 
         return given()
+                .pathParam("id", entityId)
                 .spec(requestSpecification)
                 .when()
-                .get(PropertyProvider.getInstance().getProperty("api.url.get"), entityId)
+                .get(PropertyProvider.getInstance().getProperty("api.url.get"))
                 .then()
                 .statusCode(200)
                 .extract().as(Response.class, ObjectMapperType.GSON);
@@ -78,10 +79,11 @@ public class BaseRequests {
     public static void patchEntityById(String entityId, Entity entityPojo) {
 
         given()
+                .pathParam("id", entityId)
                 .spec(requestSpecification)
                 .body(entityPojo)
                 .when()
-                .patch(PropertyProvider.getInstance().getProperty("api.url.patch"), entityId)
+                .patch(PropertyProvider.getInstance().getProperty("api.url.patch"))
                 .then()
                 .statusCode(204)
                 .extract().asString();
@@ -112,8 +114,10 @@ public class BaseRequests {
 
         for (String entityId : entitiesId) {
             given()
+                    .pathParam("id", entityId)
+                    .spec(requestSpecification)
                     .when()
-                    .delete(PropertyProvider.getInstance().getProperty("api.url.delete"), entityId)
+                    .delete(PropertyProvider.getInstance().getProperty("api.url.delete"))
                     .then()
                     .statusCode(204);
         }
